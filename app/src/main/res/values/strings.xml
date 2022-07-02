@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">virun</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="banner_ad_unit_id">ca-app-pub-1315253554881650/1147571650</string>
+
 </resources>

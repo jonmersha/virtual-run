@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "463558689271",
+    "project_id": "virtual-run-7b75d",
+    "storage_bucket": "virtual-run-7b75d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463558689271:android:5af942ffa9a448b7366ef2",
+        "android_client_info": {
+          "package_name": "com.besheger.vrun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463558689271-8rklh4a2ohp5omv2h3jm1c8ttutfhcag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaAH9ODNfMG5uMREvVPjn6Hc63YQqbO2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463558689271-8rklh4a2ohp5omv2h3jm1c8ttutfhcag.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
