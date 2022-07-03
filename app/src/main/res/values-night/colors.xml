@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text_color">#009688</color>
+    <color name="text_notifications">#E91E63</color>
+    <color name="top_gradient_start_color">#D3EDF1F4</color>
+    <color name="icon_back">#009688</color>
+    <color name="side_start_color">#FFFFFF</color>
+    <color name="side_end_color">#00EFE5E5</color>
+</resources>

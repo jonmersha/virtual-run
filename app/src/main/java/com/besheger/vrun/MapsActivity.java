@@ -5,7 +5,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -13,7 +15,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,27 +55,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location location;
     private boolean mapReady;
     private AdView adView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
 
-
-
-
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+       // adView.loadAd(adRequest);
 
         adView.setAdListener(new AdListener() {
             @Override
@@ -97,23 +97,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 Toast.makeText(MapsActivity.this, "Adds loaded", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onAdOpened() {
                 // Code to be executed when an ad opens an overlay that
                 // covers the screen.
             }
         });
-
-
-
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
-        speed=findViewById(R.id.textView2);
-        locationName=findViewById(R.id.textView);
+        speed=findViewById(R.id.speed);
+        locationName=findViewById(R.id.location_info);
 
 
         /////////////////////////location Setting
@@ -136,7 +132,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this, "Location not Enabled", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -164,7 +159,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        speed.setText(3.6*location.getSpeed()+"");
+
+        String s = String.format("%.2f", 3.6*location.getSpeed());
+        speed.setText(s);
         if(this.mapReady)
         {
             Geocoder geo=new Geocoder(getBaseContext().getApplicationContext(), Locale.getDefault());
@@ -183,6 +180,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
+
+
+    public void addEvent(View view){
+        LayoutInflater layoutInflater = LayoutInflater.from(view.getContext());
+        View promptView = layoutInflater.inflate(R.layout.activity_add_event, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
+        alertDialogBuilder.setView(promptView);
+        final Button pinn_number = promptView.findViewById(R.id.create);
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+                    String message;
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        String pass=pinn_number.getText().toString();
+                        String ussd=String.format("*%s*%s*%s%s",841,pass,6, Uri.encode("#"));
+                       // mobileMoney.sendUSSD(ussd);
+                    }
+                })
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
 
 
 }
